@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Engineer</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
+    <!-- Icon Libraries: Font Awesome for social, Devicon for tech -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
+    
+    <style>
+        :root {
+            --card-bg: rgba(23, 23, 23, 0.6);
+            --border: rgba(255, 255, 255, 0.1);
+            --accent: #38bdf8;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body {
+            height: 100%;
+            font-family: "Inter", sans-serif;
+            background: #0a0a0a;
+            color: #f3f3f3;
+            /* overflow: hidden; */ /* This was the problematic line */
+            overflow-y: auto;   /* FIXED: Allows vertical scrolling */
+            overflow-x: hidden; /* FIXED: Prevents horizontal scrolling */
+            animation: fadeIn 1.2s ease 0.2s forwards;
+            opacity: 0;
+        }
+        @keyframes fadeIn { to { opacity: 1; } }
+
+        /* --- Dynamic Animated Gradient Background --- */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(circle at 20% 30%, #2563eb 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, #9333ea 0%, transparent 50%);
+            opacity: .15;
+            animation: bgShift 20s ease-in-out infinite alternate;
+            z-index: -1;
+        }
+        @keyframes bgShift { 100% { transform: translate(-40px, -50px) scale(1.2); } }
+        
+        /* --- Main Layout --- */
+        .container {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 4rem;
+            max-width: 1100px;
+            width: 90vw;
+            height: 100%; /* Note: If content consistently overflows, consider min-height or height: auto here as well for body scroll */
+            margin: auto;
+            padding-top: 15vh;
+            padding-bottom: 5vh; /* Added some padding for better scroll experience */
+        }
+
+        /* --- 3D Image Card --- */
+        .card-container { flex-shrink: 0; transform-style: preserve-3d; perspective: 1000px; }
+        .avatar-image { width: 350px; border-radius: 20px; border: 1px solid var(--border); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5); transition: box-shadow .3s ease; will-change: transform; }
+        .card-container:hover .avatar-image { box-shadow: 0 28px 70px rgba(0, 0, 0, 0.6); }
+
+        /* --- Content Section --- */
+        .content { width: 500px; max-width: 100%; display: flex; flex-direction: column; }
+        .title { font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 700; line-height: 1.1; margin-bottom: 1rem; background: linear-gradient(90deg, #c7c7c7, #ffffff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        /* --- Professional Links / Icons --- */
+        .pro-links { display: flex; gap: 1.5rem; margin-bottom: 2rem; }
+        .pro-links a { color: #a0a0a0; font-size: 1.5rem; transition: color 0.3s ease, text-shadow 0.3s ease; }
+        .pro-links a:hover { color: #ffffff; text-shadow: 0 0 10px var(--accent); }
+
+        /* --- Tabbed Info Box --- */
+        .info-box { background: var(--card-bg); backdrop-filter: blur(14px) saturate(120%); -webkit-backdrop-filter: blur(14px) saturate(120%); border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4); animation: slideUp .8s cubic-bezier(.25, 1, .3, 1) .4s both; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .tabs { display: flex; border-bottom: 1px solid var(--border); }
+        .tab-button { padding: 1rem 1.5rem; border: none; background: none; color: #a0a0a0; font-family: "Inter", sans-serif; font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: color 0.3s ease, background-color 0.3s ease; }
+        .tab-button:hover { color: #fff; }
+        .tab-button.active { color: #fff; background-color: rgba(255, 255, 255, 0.05); }
+        
+        .tab-content { padding: 1.5rem; display: none; }
+        .tab-content.active { display: block; animation: contentFadeIn 0.4s; }
+        @keyframes contentFadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .tab-content h3 { font-size: 1.15rem; font-weight: 600; color: #fff; margin-bottom: 1rem; }
+        .tab-content p, .tab-content ul { font-weight: 300; line-height: 1.7; margin-bottom: 1.5rem; }
+        .tab-content ul { list-style: none; padding-left: 0; }
+        .tab-content li { margin-bottom: 0.8rem; }
+        .tab-content li a { color: var(--accent); text-decoration: none; transition: color 0.3s; }
+        .tab-content li a:hover { color: #fff; }
+        .tab-content p:last-child, .tab-content ul:last-child { margin-bottom: 0; }
+        .tab-content .skill-text { font-size: 0.9rem; color: #c0c0c0; line-height: 1.6; }
+
+        /* --- Technology Icons --- */
+        .tech-icons { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; margin-bottom: 1.5rem; }
+        .tech-icons i { font-size: 1.8rem; color: #a0a0a0; transition: color 0.3s ease, transform 0.3s ease; }
+        .tech-icons i:hover { color: #ffffff; transform: scale(1.1); }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 860px) {
+            /* body { overflow-y: auto; } */ /* This is now handled by the main html, body rule, but doesn't hurt to keep if specific overrides were intended */
+            .container {
+                flex-direction: column;
+                align-items: center; 
+                text-align: center;
+                gap: 2rem;
+                padding: 4rem 1rem; /* Consider adjusting padding-bottom if using vh units above */
+                height: auto; /* This is good, allows container to grow */
+            }
+            .content { width: 100%; }
+            .avatar-image { width: 280px; }
+            .pro-links { justify-content: center; }
+            .tab-button { flex-grow: 1; }
+        }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <div class="card-container" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-perspective="1000" data-tilt-glare="true" data-tilt-max-glare="0.2">
+            <img src="a.jpeg" alt="Anime Avatar" class="avatar-image">
+        </div>
+
+        <div class="content">
+            <h1 class="title" id="main-title"></h1>
+            
+            <div class="pro-links">
+                <a href="https://github.com/ahmethalici" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://linkedin.com/in/ahmethalici" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                <a href="_blank" target="_blank" title="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+                <a href="mailto:ahmet.halici@viseur.ai" title="Contact Me"><i class="fas fa-envelope"></i></a>
+            </div>
+
+            <div class="info-box">
+                <div class="tabs">
+                    <button class="tab-button active" data-tab="about">About</button>
+                    <button class="tab-button" data-tab="publications">Publications</button>
+                    <button class="tab-button" data-tab="projects">Projects</button>
+                </div>
+
+                <div class="tabs-content-container">
+                    <div id="about" class="tab-content active">
+                        <h3>About Me</h3>
+                        <p>Hi there, I'm Ahmet. I study Applied Artificial Intelligence at Germany and at the same work as AI Engineer at Viseur.ai</p>
+                        <br>
+                        <p>This website is currently still under development in my free time so some of the links might not be working.</p>
+                        
+                        <h3>Specializations</h3>
+                        <p>My primary focus lies in Computer Vision, Generative Models (GANs, Diffusion), and exploring AI applications in Wireless Communications and signal processing.</p>
+                        
+                        <h3>Core Technologies</h3>
+                        <div class="tech-icons">
+                            <i class="devicon-python-plain" title="Python"></i>
+                            <i class="devicon-pytorch-original" title="PyTorch"></i>
+                            <i class="devicon-tensorflow-original" title="TensorFlow"></i>
+                            <i class="devicon-opencv-plain" title="OpenCV"></i>
+                            <i class="devicon-amazonwebservices-original" title="AWS"></i>
+                            <i class="devicon-docker-plain" title="Docker"></i>
+                            <i class="devicon-git-plain" title="Git"></i>
+                        </div>
+                        <p class="skill-text">Python, PyTorch, Keras, TensorFlow, Scikit-learn, Numpy, SciPy, Pandas, OpenCV, Hugging Face, AWS, Docker, Git.</p>
+                    </div>
+
+                    <div id="publications" class="tab-content">
+                        <h3>Recent Publications</h3>
+                        <ul>
+                            <li><a href="#" target="_blank">A Robust Hybrid Approach for Real-time Physical Activity Recognition Usin Body-Worn Interial Sensors</a></li>
+                            <li><a href="#" target="_blank">Determinantal Factorizations of Trees: An Implementation Overview</a></li>
+                        </ul>
+                    </div>
+
+                    <div id="projects" class="tab-content">
+                        <h3>Featured Projects</h3>
+                        <ul>
+                            <li><a href="https://github.com/ahmethalici/PapSmear-Classification" target="_blank">Project 1: Pap Smear Cell Classification</a><br><small>A Multi-Faceted Deep Learning Framework for Enhanced Cervical Cancer Diagnosis and Prognosis</small></li>
+                            <li><a href="#" target="_blank">Project 2: AreULost</a><br><small>Leveraging Vision Transformers and vLLMs, fine-tuned on custom datasets, to match textual person descriptions with individuals in live street camera footage.</small></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <iframe id="ytplayer" src="https://www.youtube.com/embed/NyD7Yjt39CI?autoplay=1&loop=1&playlist=NyD7Yjt39CI&mute=1&enablejsapi=1&controls=0&modestbranding=1" style="position:fixed; left:-9999px; top:-9999px;" allow="autoplay" title="background music"></iframe>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+    <script src="https://unpkg.com/typeit@8.7.1/dist/index.umd.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Typing Effect for Title ---
+            new TypeIt("#main-title", {
+                strings: "AI Engineer",
+                speed: 100,
+                waitUntilVisible: true,
+                lifeLike: true,
+            }).go();
+
+            // --- Tabbed Content Logic ---
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const allTabs = document.querySelectorAll('.tab-content');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Deactivate all buttons and tabs first
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    allTabs.forEach(tab => tab.classList.remove('active'));
+
+                    // Activate the clicked button and its corresponding tab
+                    button.classList.add('active');
+                    const targetTab = document.querySelector(`#${button.dataset.tab}`);
+                    if (targetTab) {
+                        targetTab.classList.add('active');
+                    }
+                });
+            });
+        });
+
+        // --- Unmute Audio on First User Interaction ---
+        let isUnlocked = false;
+        function unmuteAudio() {
+            if (isUnlocked) return;
+            const ytplayer = document.getElementById('ytplayer');
+            if (ytplayer && ytplayer.contentWindow) {
+                ytplayer.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
+            }
+            isUnlocked = true;
+            window.removeEventListener('click', unmuteAudio);
+            window.removeEventListener('touchstart', unmuteAudio);
+            window.removeEventListener('keydown', unmuteAudio);
+        }
+        window.addEventListener('click', unmuteAudio);
+        window.addEventListener('touchstart', unmuteAudio);
+        window.addEventListener('keydown', unmuteAudio);
+    </script>
+</body>
+</html>
